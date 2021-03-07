@@ -9,12 +9,16 @@ func routes(_ app: Application) throws {
     return "Hello, world!"
   }
   
-  app.post("info") { req -> String in
+  app.post("info") { req -> InfoResponse in
     let data = try req.content.decode(InfoData.self)
-    return "Hello \(data.name)"
+    return InfoResponse(request: data)
   }
 }
 
 struct InfoData: Content {
   let name: String
+}
+
+struct InfoResponse: Content {
+  let request: InfoData
 }
